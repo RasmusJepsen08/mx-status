@@ -1,0 +1,60 @@
+<!DOCTYPE html><html lang="da">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MX Status Danmark</title>
+  <style>
+    body { font-family: Arial; margin: 0; background: #111; color: white; }
+    header { padding: 16px; font-size: 20px; font-weight: bold; }
+    .track { padding: 16px; border-bottom: 1px solid #333; }
+    .status { float: right; padding: 6px 12px; border-radius: 10px; }
+    .green { background: green; }
+    .red { background: red; }
+    .orange { background: orange; }
+    button { margin-top: 10px; padding: 8px; }
+  </style>
+</head>
+<body>
+  <header>🏍️ MX Status Danmark</header>  <div id="tracks"></div>  <script>
+    const tracks = [
+      { name: "Silkeborg MX", status: "Åben" },
+      { name: "Kolding MX", status: "Lukket" },
+      { name: "Børkop MX", status: "Vådt" }
+    ];
+
+    function getClass(status) {
+      if (status === "Åben") return "green";
+      if (status === "Lukket") return "red";
+      return "orange";
+    }
+
+    function render() {
+      const container = document.getElementById("tracks");
+      container.innerHTML = "";
+
+      tracks.forEach((track, index) => {
+        const div = document.createElement("div");
+        div.className = "track";
+
+        div.innerHTML = `
+          <strong>${track.name}</strong>
+          <span class="status ${getClass(track.status)}">${track.status}</span>
+          <br/>
+          <button onclick="updateStatus(${index})">Opdater</button>
+        `;
+
+        container.appendChild(div);
+      });
+    }
+
+    function updateStatus(index) {
+      const newStatus = prompt("Sæt status (Åben, Lukket, Vådt):");
+      if (newStatus) {
+        tracks[index].status = newStatus;
+        render();
+      }
+    }
+
+    render();
+  </script></body>
+</html>
